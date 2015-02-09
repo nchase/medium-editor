@@ -87,11 +87,7 @@
 }
 
 .stalker-toolbar {
-    -webkit-animation: pop-upwards 160ms forwards linear;
-       -moz-animation: pop-upwards 160ms forwards linear;
-        -ms-animation: pop-upwards 160ms forwards linear;
-         -o-animation: pop-upwards 160ms forwards linear;
-            animation: pop-upwards 160ms forwards linear;
+    animation: pop-upwards 160ms forwards linear;
     transition: top .075s ease-out, left .075s ease-out;
 }
 
@@ -122,8 +118,7 @@
             outline: 0;
             border: none;
             box-shadow: none;
-            -webkit-appearance: none;
-               -moz-appearance: none;
+            appearance: none;
         }
     }
 
@@ -151,5 +146,29 @@
         content: attr(data-placeholder) !important;
         font-style: italic;
         white-space: pre;
+    }
+}
+
+.medium-editor-dragover {
+    background: #ddd;
+}
+
+.medium-image-loading {
+    width: 40px;
+    height: 40px;
+    background-color: #333;
+    display: inline-block;
+
+    border-radius: 100%;
+    animation: medium-image-loading-animation 1.0s infinite ease-in-out;
+}
+
+@keyframes medium-image-loading-animation {
+    0% {
+        transform: scale(0.0)
+    }
+    100% {
+        transform: scale(1.0);
+        opacity: 0;
     }
 }

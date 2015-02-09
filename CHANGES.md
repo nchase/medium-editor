@@ -1,3 +1,36 @@
+2.2.0 / 2015-02-05
+==================
+* Fix bug in getSelectedParentElement + Fix tests in browsers
+* Fall back to shimmed insertHTML in cases where firefox throws 
+  when calling insertHTML
+* Prevent "Argument not optional" error
+* Prevent infinite loop after findAdjacentTextNodeWithContent
+* Remove cleanups from contenteditable false areas
+* Firefox fix: Don't modify value of input before calling execCommand()
+* Fix selection issue for clean pasted html test case in firefox
+* Add image drag and drop support
+
+
+2.1.3 / 2015-01-31
+==================
+* Fix issue with multiple elements with the same class 
+  on the same editor instance
+
+
+2.1.2 / 2015-01-30
+==================
+* Specify default npm registry (`http://registry.npmjs.org`)
+
+
+2.1.1 / 2015-01-30
+==================
+* Adds support for newlines in placeholder attribute
+* Adds support and documentation for new toolbar extensions
+* Adds support for changing 'open in new window' label text
+* Fixes bug where `nodeValue` could unexpectedly be null
+* A couple of fixes to make tests a bit more reliable when run in the browser
+
+
 2.1.0 / 2015-01-27
 ==================
 

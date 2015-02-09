@@ -58,7 +58,7 @@ describe('Initialization TestCase', function () {
             expect(editor.elements).toEqual([element]);
         });
 
-        it('should always initalize elements as an Array', function() {
+        it('should always initalize elements as an Array', function () {
             var nodeList = document.querySelectorAll('span'),
                 node = document.querySelector('span'),
                 editor = new MediumEditor(nodeList);
@@ -110,6 +110,7 @@ describe('Initialization TestCase', function () {
                 disableAnchorForm: false,
                 disablePlaceholders: false,
                 elementsContainer: document.body,
+                imageDragging: true,
                 standardizeSelectionStart: false,
                 contentWindow: window,
                 ownerDocument: document,

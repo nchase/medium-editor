@@ -9,7 +9,11 @@ describe('Anchor Preview TestCase', function () {
         jasmine.clock().install();
         this.el = document.createElement('div');
         this.el.className = 'editor';
-        this.el.innerHTML = 'lorem <a id="test-link" href="http://test.com">ipsum</a> preview <span id="another-element">&nbsp;</span> <a id="test-empty-link" href="">ipsum</a>';
+        this.el.innerHTML = 'lorem ' +
+            '<a id="test-link" href="http://test.com">ipsum</a> ' +
+            'preview <span id="another-element">&nbsp;</span> ' +
+            '<a id="test-empty-link" href="">ipsum</a> ' +
+            '<a id="test-symbol-link" href="http://[{~#custom#~}].com"></a>';
         document.body.appendChild(this.el);
     });
 
@@ -23,7 +27,8 @@ describe('Anchor Preview TestCase', function () {
             var editor = new MediumEditor('.editor', {
                 delay: 200
             }),
-                sel = window.getSelection();
+                sel = window.getSelection(),
+                nextRange;
 
             // show preview
             spyOn(MediumEditor.prototype, 'showAnchorPreview').and.callThrough();
@@ -38,7 +43,7 @@ describe('Anchor Preview TestCase', function () {
             expect(editor.showAnchorPreview).toHaveBeenCalled();
 
             // link is set in preview
-            expect(editor.anchorPreview.querySelector('i').innerHTML).toBe(document.getElementById('test-link').href);
+            expect(editor.anchorPreview.querySelector('i').innerHTML).toBe(document.getElementById('test-link').attributes.href.value);
 
             // load into editor
             spyOn(MediumEditor.prototype, 'showAnchorForm').and.callThrough();
@@ -48,12 +53,30 @@ describe('Anchor Preview TestCase', function () {
 
             // selecting other text should close the toolbar
             spyOn(MediumEditor.prototype, 'hideToolbarActions').and.callThrough();
+            nextRange = document.createRange();
+            nextRange.selectNodeContents(document.getElementById('another-element'));
             sel.removeAllRanges();
-            sel.addRange(document.createRange().selectNodeContents(document.getElementById('another-element')));
+            sel.addRange(nextRange);
             fireEvent(document.documentElement, 'mouseup');
             jasmine.clock().tick(200);
             expect(editor.hideToolbarActions).toHaveBeenCalled();
 
+        });
+
+        it('Should show the unencoded link within the preview', function () {
+            var editor = new MediumEditor('.editor');
+
+            // show preview
+            editor.editorAnchorObserver({
+                target: document.getElementById('test-symbol-link')
+            });
+            fireEvent(editor.elements[0], 'mouseover', undefined, undefined, document.getElementById('test-symbol-link'));
+
+            // preview shows only after delay
+            jasmine.clock().tick(200);
+
+            // link is set in preview
+            expect(editor.anchorPreview.querySelector('i').innerHTML).toBe(document.getElementById('test-symbol-link').attributes.href.value);
         });
 
         it('Anchor form stays visible on click', function () {
