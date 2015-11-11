@@ -5465,6 +5465,9 @@ MediumEditor.extensions = {};
             }
 
             toolbarElement.style.left = targetLeft + 'px';
+
+            toolbarElement.style.left = 'auto';
+            toolbarElement.style.top = 'auto';
         },
 
         positionToolbar: function (selection) {
